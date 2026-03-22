@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Forward — Groove Pal</title>
+    <link rel="icon" type="image/jpeg" href="assets/groove-pal-icon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #faf6f1;
+            --card: #fffdf9;
+            --gold: #c9a227;
+            --brown: #3d2817;
+            --brown-medium: #6b5344;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--brown);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--brown);
+            text-decoration: none;
+        }
+        
+        .send-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        
+        .emoji-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            color: var(--brown);
+            margin-bottom: 15px;
+        }
+        
+        .intro {
+            color: var(--brown-medium);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .option-btn {
+            display: block;
+            padding: 18px 25px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .option-primary {
+            background: var(--gold);
+            color: var(--brown);
+        }
+        
+        .option-primary:hover {
+            background: var(--brown);
+            color: var(--gold);
+        }
+        
+        .option-secondary {
+            background: transparent;
+            border: 2px solid var(--brown);
+            color: var(--brown);
+        }
+        
+        .option-secondary:hover {
+            background: var(--brown);
+            color: var(--cream);
+        }
+        
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .option-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        /* Address reveal section */
+        .address-section {
+            display: none;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+        
+        .address-section.active {
+            display: block;
+        }
+        
+        .address-label {
+            font-size: 0.85rem;
+            color: var(--brown-medium);
+            margin-bottom: 10px;
+        }
+        
+        .address-box {
+            background: var(--bg);
+            border: 2px dashed var(--gold);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .address-box strong {
+            color: var(--brown);
+        }
+        
+        .copy-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: var(--gold);
+            color: var(--brown);
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .copy-btn:hover {
+            background: var(--brown);
+            color: var(--gold);
+        }
+        
+        /* Know someone form */
+        .friend-form {
+            display: none;
+            text-align: left;
+        }
+        
+        .friend-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--brown);
+            margin-bottom: 8px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: var(--gold);
+            color: var(--brown);
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .submit-btn:hover {
+            background: var(--brown);
+            color: var(--gold);
+        }
+        
+        .shipped-btn {
+            width: 100%;
+            background: #4a7c4e;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .shipped-btn:hover {
+            background: #3a5c3e;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: var(--brown-medium);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-link:hover {
+            color: var(--gold);
+        }
+        
+        .note {
+            font-size: 0.85rem;
+            color: var(--brown-medium);
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="/" class="logo">Groove Pal</a>
+        </header>
+        
+        <div class="send-card">
+            <div class="emoji-icon">✉️</div>
+            <h1>Send It Forward</h1>
+            <p class="intro">
+                Your listen is logged! Now this record continues its journey.<br>
+                <strong>Where should it go next?</strong>
+            </p>
+            
+            <!-- Options -->
+            <div class="options" id="options">
+                <a href="#" class="option-btn option-primary" id="find-me-btn">
+                    <p class="option-title">Find me someone 🎲</p>
+                    <p class="option-desc">We'll match you with another Pal</p>
+                </a>
+                <a href="#" class="option-btn option-secondary" id="know-someone-btn">
+                    <p class="option-title">I know someone 👋</p>
+                    <p class="option-desc">Send to a friend or invite someone new</p>
+                </a>
+            </div>
+            
+            <!-- Address reveal (Find me someone) -->
+            <div class="address-section" id="address-section">
+                <p class="address-label">Ship this record to:</p>
+                <div class="address-box">
+                    <strong>Kyle Brady</strong><br>
+                    Groove Pal HQ<br>
+                    [Address provided after matching]<br>
+                    United States
+                </div>
+                <button class="copy-btn" id="copy-btn">Copy Address</button>
+                
+                <button class="shipped-btn" id="shipped-btn">I've Shipped It! 📬</button>
+            </div>
+            
+            <!-- Friend form (I know someone) -->
+            <div class="friend-form" id="friend-form">
+                <form id="invite-form">
+                    <div class="form-group">
+                        <label for="friend-email">Their email address</label>
+                        <input type="email" id="friend-email" placeholder="friend@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="friend-name">Their name (optional)</label>
+                        <input type="text" id="friend-name" placeholder="First name">
+                    </div>
+                    <button type="submit" class="submit-btn">Send Invite</button>
+                </form>
+            </div>
+            
+            <a href="#" class="back-link" id="back-link" style="display: none;">← Back to options</a>
+            
+            <p class="note">
+                📦 <strong>Shipping tip:</strong> Media mail is cheapest (~$3-5). 
+                Wrap the record in cardboard or a record mailer to protect it.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const recordId = params.get('record') || 'GP-0001';
+        const fromLocation = params.get('from') || '';
+        
+        const options = document.getElementById('options');
+        const addressSection = document.getElementById('address-section');
+        const friendForm = document.getElementById('friend-form');
+        const backLink = document.getElementById('back-link');
+        
+        document.getElementById('find-me-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            options.style.display = 'none';
+            addressSection.classList.add('active');
+            backLink.style.display = 'block';
+        });
+        
+        document.getElementById('know-someone-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            options.style.display = 'none';
+            friendForm.classList.add('active');
+            backLink.style.display = 'block';
+        });
+        
+        backLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            options.style.display = 'flex';
+            addressSection.classList.remove('active');
+            friendForm.classList.remove('active');
+            backLink.style.display = 'none';
+        });
+        
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            const address = "Kyle Brady\nGroove Pal HQ\n[Address after matching]\nUnited States";
+            navigator.clipboard.writeText(address).then(() => {
+                document.getElementById('copy-btn').textContent = 'Copied! ✓';
+                setTimeout(() => {
+                    document.getElementById('copy-btn').textContent = 'Copy Address';
+                }, 2000);
+            });
+        });
+        
+        document.getElementById('shipped-btn').addEventListener('click', () => {
+            alert(`🎉 Amazing! Record ${recordId} is on its way!\n\nWe'll update the journey page once it arrives at its next destination.`);
+            window.location.href = `/r/${recordId}`;
+        });
+        
+        document.getElementById('invite-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('friend-email').value;
+            const name = document.getElementById('friend-name').value || 'Your friend';
+            
+            alert(`📧 Invite sent to ${email}!\n\nOnce ${name} signs up, we'll send you their address so you can ship the record.`);
+            window.location.href = `/r/${recordId}`;
+        });
+    </script>
+</body>
+</html>

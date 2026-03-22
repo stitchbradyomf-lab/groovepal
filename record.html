@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Journey — Groove Pal</title>
+    <link rel="icon" type="image/jpeg" href="assets/groove-pal-icon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #faf6f1;
+            --card: #fffdf9;
+            --gold: #c9a227;
+            --brown: #3d2817;
+            --brown-medium: #6b5344;
+            --cream: #faf6f1;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--brown);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--brown);
+        }
+        
+        .record-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .record-id {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .album-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .album-cover {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .album-details h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--brown);
+            margin-bottom: 5px;
+        }
+        
+        .album-details .artist {
+            color: var(--brown-medium);
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .album-details .year {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        
+        .stat-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            color: var(--brown);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--brown-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding-top: 25px;
+        }
+        
+        .cta-question {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: var(--brown);
+            margin-bottom: 20px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--brown);
+            padding: 16px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: var(--brown);
+            color: var(--gold);
+        }
+        
+        /* Journey Log */
+        .journey-section {
+            margin-top: 30px;
+        }
+        
+        .journey-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            color: var(--brown);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .journey-empty {
+            text-align: center;
+            padding: 40px;
+            color: var(--brown-medium);
+            font-style: italic;
+        }
+        
+        .journey-item {
+            background: var(--card);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .journey-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+        
+        .journey-location {
+            font-weight: 600;
+            color: var(--brown);
+        }
+        
+        .journey-date {
+            font-size: 0.85rem;
+            color: var(--brown-medium);
+        }
+        
+        .journey-listener {
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        
+        .journey-note {
+            font-size: 0.95rem;
+            color: var(--brown-medium);
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        .journey-track {
+            font-size: 0.85rem;
+            color: var(--brown-medium);
+            margin-top: 10px;
+        }
+        
+        .journey-track strong {
+            color: var(--brown);
+        }
+        
+        /* Log Form */
+        .log-form {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            display: none;
+        }
+        
+        .log-form.active {
+            display: block;
+        }
+        
+        .form-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--brown);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--brown);
+            margin-bottom: 8px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        .location-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+        }
+        
+        .listen-count {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .listen-count label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+        }
+        
+        .listen-count input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: var(--gold);
+            color: var(--brown);
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background: var(--brown);
+            color: var(--gold);
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--brown-medium);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-link:hover {
+            color: var(--gold);
+        }
+
+        @media (max-width: 500px) {
+            .album-info { flex-direction: column; align-items: center; text-align: center; }
+            .stats { grid-template-columns: 1fr; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="/" style="text-decoration: none;"><h2 class="logo">Groove Pal</h2></a>
+        </header>
+        
+        <!-- Record Info Card -->
+        <div class="record-card" id="record-view">
+            <p class="record-id" id="record-id">GP-0001</p>
+            
+            <div class="album-info">
+                <div class="album-cover">🎵</div>
+                <div class="album-details">
+                    <h1 id="album-title">Kind of Blue</h1>
+                    <p class="artist" id="album-artist">Miles Davis</p>
+                    <p class="year" id="album-year">1959</p>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div>
+                    <p class="stat-value" id="stat-listeners">0</p>
+                    <p class="stat-label">Listeners</p>
+                </div>
+                <div>
+                    <p class="stat-value" id="stat-miles">0</p>
+                    <p class="stat-label">Miles</p>
+                </div>
+                <div>
+                    <p class="stat-value" id="stat-days">0</p>
+                    <p class="stat-label">Days Traveling</p>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <p class="cta-question">Did you receive this record?</p>
+                <a href="#" class="cta-button" id="log-btn">Log Your Listen →</a>
+            </div>
+        </div>
+        
+        <!-- Log Form (hidden by default) -->
+        <div class="log-form" id="log-form">
+            <h2 class="form-title">Log Your Listen</h2>
+            
+            <form id="listen-form">
+                <div class="form-group">
+                    <label for="email">Your email</label>
+                    <input type="email" id="email" name="email" placeholder="you@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">What should we call you?</label>
+                    <input type="text" id="name" name="name" placeholder="Your first name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Where are you?</label>
+                    <div class="location-row">
+                        <input type="text" id="city" name="city" placeholder="City" required>
+                        <input type="text" id="state" name="state" placeholder="State" maxlength="2">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="favorite-track">Favorite track?</label>
+                    <select id="favorite-track" name="favorite-track">
+                        <option value="">Select a track...</option>
+                        <option value="side-a">Side A (first half)</option>
+                        <option value="side-b">Side B (second half)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>How many times did you listen?</label>
+                    <div class="listen-count">
+                        <label>Side A: <input type="number" id="side-a-count" name="side-a-count" min="0" value="1"></label>
+                        <label>Side B: <input type="number" id="side-b-count" name="side-b-count" min="0" value="1"></label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="listened-with">Who did you listen with? (optional)</label>
+                    <input type="text" id="listened-with" name="listened-with" placeholder="Family, friends, solo...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="note">Any thoughts to share? (optional)</label>
+                    <textarea id="note" name="note" placeholder="A memory, a feeling, a recommendation..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Save My Listen</button>
+            </form>
+            
+            <a href="#" class="back-link" id="back-btn">← Back to record</a>
+        </div>
+        
+        <!-- Journey Log -->
+        <div class="journey-section" id="journey-section">
+            <h3 class="journey-title">The Journey So Far</h3>
+            <div id="journey-list">
+                <p class="journey-empty">This record hasn't started its journey yet. Be the first listener!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get record ID from URL
+        const path = window.location.pathname;
+        const recordId = path.split('/r/')[1] || 'GP-0001';
+        
+        document.getElementById('record-id').textContent = recordId;
+        
+        // Toggle form visibility
+        const logBtn = document.getElementById('log-btn');
+        const backBtn = document.getElementById('back-btn');
+        const recordView = document.getElementById('record-view');
+        const logForm = document.getElementById('log-form');
+        const journeySection = document.getElementById('journey-section');
+        
+        logBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            recordView.style.display = 'none';
+            journeySection.style.display = 'none';
+            logForm.classList.add('active');
+            
+            // Check if user exists via email lookup
+            const savedEmail = localStorage.getItem('groovepal_email');
+            if (savedEmail) {
+                document.getElementById('email').value = savedEmail;
+                lookupUser(savedEmail);
+            }
+        });
+        
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logForm.classList.remove('active');
+            recordView.style.display = 'block';
+            journeySection.style.display = 'block';
+        });
+        
+        // Email lookup for returning users
+        const emailInput = document.getElementById('email');
+        let lookupTimeout;
+        
+        emailInput.addEventListener('blur', () => {
+            const email = emailInput.value.trim();
+            if (email) {
+                lookupUser(email);
+            }
+        });
+        
+        async function lookupUser(email) {
+            try {
+                const response = await fetch(`/.netlify/functions/get-user?email=${encodeURIComponent(email)}`);
+                const data = await response.json();
+                
+                if (data.found && data.user) {
+                    // Pre-fill fields
+                    if (data.user.name) {
+                        document.getElementById('name').value = data.user.name;
+                    }
+                    if (data.user.location) {
+                        const parts = data.user.location.split(', ');
+                        if (parts[0]) document.getElementById('city').value = parts[0];
+                        if (parts[1]) document.getElementById('state').value = parts[1];
+                    }
+                }
+            } catch (e) {
+                console.log('User lookup failed:', e);
+            }
+        }
+        
+        // Form submission
+        document.getElementById('listen-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                recordId: recordId,
+                email: document.getElementById('email').value.trim(),
+                name: document.getElementById('name').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                state: document.getElementById('state').value.trim().toUpperCase(),
+                favoriteTrack: document.getElementById('favorite-track').value,
+                sideACount: parseInt(document.getElementById('side-a-count').value) || 0,
+                sideBCount: parseInt(document.getElementById('side-b-count').value) || 0,
+                listenedWith: document.getElementById('listened-with').value.trim(),
+                note: document.getElementById('note').value.trim()
+            };
+            
+            // Save email locally for future
+            localStorage.setItem('groovepal_email', formData.email);
+            
+            // For now, just show success (backend will be added)
+            alert(`Thanks ${formData.name}! Your listen has been logged. 🎵\n\nNext step: Send this record forward!`);
+            
+            // Redirect to send-forward page
+            window.location.href = `/send.html?record=${recordId}&from=${encodeURIComponent(formData.city + (formData.state ? ', ' + formData.state : ''))}`;
+        });
+    </script>
+</body>
+</html>

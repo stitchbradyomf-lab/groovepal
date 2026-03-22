@@ -301,16 +301,64 @@
         <a href="journey-prototype.html" class="preview-link">View "Kind of Blue" Journey →</a>
     </section>
     
-    <!-- Waitlist Form Placeholder -->
+    <!-- Waitlist Form -->
     <section id="notify" style="padding: 60px 20px; text-align: center; background: var(--card);">
         <h2 class="section-title">Get Notified at Launch</h2>
         <p style="color: var(--brown-medium); margin-bottom: 25px;">We're almost ready. Drop your email and be first to join.</p>
-        <!-- Replace with actual form -->
-        <form style="max-width: 400px; margin: 0 auto; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-            <input type="email" placeholder="your@email.com" style="flex: 1; min-width: 200px; padding: 14px 20px; border: 1px solid #ddd; border-radius: 50px; font-size: 1rem;">
-            <button type="submit" style="background: var(--gold); color: var(--brown); border: none; padding: 14px 25px; border-radius: 50px; font-weight: 600; cursor: pointer;">Notify Me</button>
+        <form id="email-form" style="max-width: 400px; margin: 0 auto; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+            <input type="email" id="email-input" placeholder="your@email.com" required style="flex: 1; min-width: 200px; padding: 14px 20px; border: 1px solid #ddd; border-radius: 50px; font-size: 1rem;">
+            <button type="submit" id="submit-btn" style="background: var(--gold); color: var(--brown); border: none; padding: 14px 25px; border-radius: 50px; font-weight: 600; cursor: pointer;">Notify Me</button>
         </form>
+        <p id="error-msg" style="color: #c44; margin-top: 15px; display: none;"></p>
     </section>
+    
+    <script>
+        document.getElementById('email-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email-input').value.trim();
+            const btn = document.getElementById('submit-btn');
+            const errorMsg = document.getElementById('error-msg');
+            
+            btn.disabled = true;
+            btn.textContent = 'Checking...';
+            errorMsg.style.display = 'none';
+            
+            try {
+                // First check if user exists
+                const checkResponse = await fetch(`/.netlify/functions/get-user?email=${encodeURIComponent(email)}`);
+                const checkData = await checkResponse.json();
+                
+                if (checkData.found && checkData.user.name) {
+                    // Returning user with complete profile - go to confirmed
+                    window.location.href = `/confirmed.html?name=${encodeURIComponent(checkData.user.name)}`;
+                } else if (checkData.found) {
+                    // User exists but incomplete - go to welcome
+                    window.location.href = `/welcome.html?email=${encodeURIComponent(email)}`;
+                } else {
+                    // New user - create and go to welcome
+                    const signupResponse = await fetch('/.netlify/functions/signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    
+                    const signupData = await signupResponse.json();
+                    
+                    if (signupData.success) {
+                        window.location.href = `/welcome.html?email=${encodeURIComponent(email)}`;
+                    } else {
+                        throw new Error(signupData.error || 'Something went wrong');
+                    }
+                }
+            } catch (error) {
+                errorMsg.textContent = error.message;
+                errorMsg.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Notify Me';
+            }
+        });
+    </script>
     
     <!-- Footer -->
     <footer class="footer">

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome — Groove Pal</title>
+    <link rel="icon" type="image/jpeg" href="assets/groove-pal-icon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #faf6f1;
+            --card: #fffdf9;
+            --gold: #c9a227;
+            --brown: #3d2817;
+            --brown-medium: #6b5344;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--brown);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--brown);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+        
+        .welcome-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .step-indicator {
+            font-size: 0.85rem;
+            color: var(--brown-medium);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            color: var(--brown);
+            margin-bottom: 10px;
+        }
+        
+        .email-display {
+            color: var(--gold);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--brown);
+            margin-bottom: 8px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+        
+        .location-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+        }
+        
+        .hint {
+            font-size: 0.8rem;
+            color: var(--brown-medium);
+            margin-top: 6px;
+        }
+        
+        button {
+            width: 100%;
+            background: var(--gold);
+            color: var(--brown);
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: var(--brown);
+            color: var(--gold);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .privacy-note {
+            font-size: 0.8rem;
+            color: var(--brown-medium);
+            margin-top: 25px;
+        }
+
+        .error {
+            color: #c44;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="logo">Groove Pal</h2>
+        <p class="subtitle">Send a groove. Make a pal.</p>
+        
+        <div class="welcome-card">
+            <p class="step-indicator">Step 2 of 2</p>
+            <h1>Welcome, new Pal!</h1>
+            <p class="email-display" id="email-display"></p>
+            
+            <form id="welcome-form">
+                <div class="form-group">
+                    <label for="name">What should we call you?</label>
+                    <input type="text" id="name" name="name" placeholder="Your first name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">Where are you located?</label>
+                    <div class="location-row">
+                        <input type="text" id="city" name="city" placeholder="City" required>
+                        <input type="text" id="state" name="state" placeholder="State" maxlength="2" style="text-transform: uppercase;">
+                    </div>
+                    <p class="hint">Just the city & state — nothing more specific needed.</p>
+                </div>
+                
+                <button type="submit" id="submit-btn">Complete Setup</button>
+                <p class="error" id="error-msg" style="display: none;"></p>
+            </form>
+            
+            <p class="privacy-note">🔒 Your info stays private. We just need to know where records are traveling.</p>
+        </div>
+    </div>
+
+    <script>
+        // Get email from URL params
+        const params = new URLSearchParams(window.location.search);
+        const email = params.get('email');
+        
+        if (!email) {
+            window.location.href = '/';
+        }
+        
+        document.getElementById('email-display').textContent = email;
+        
+        document.getElementById('welcome-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submit-btn');
+            const errorMsg = document.getElementById('error-msg');
+            
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+            errorMsg.style.display = 'none';
+            
+            const name = document.getElementById('name').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const state = document.getElementById('state').value.trim().toUpperCase();
+            
+            const location = state ? `${city}, ${state}` : city;
+            
+            try {
+                const response = await fetch('/.netlify/functions/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, name, location })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = `/confirmed.html?name=${encodeURIComponent(name)}`;
+                } else {
+                    throw new Error(data.error || 'Something went wrong');
+                }
+            } catch (error) {
+                errorMsg.textContent = error.message;
+                errorMsg.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Complete Setup';
+            }
+        });
+    </script>
+</body>
+</html>
