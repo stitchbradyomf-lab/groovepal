@@ -1,5 +1,3 @@
-import { getStore } from "@netlify/blobs";
-
 export default async function handler(req: Request) {
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
@@ -19,47 +17,19 @@ export default async function handler(req: Request) {
       });
     }
 
-    // Normalize email as key
-    const emailKey = email.toLowerCase().trim().replace(/[^a-z0-9@._-]/g, '');
-    
-    const store = getStore("users");
-    
-    // Check if user exists
-    const existing = await store.get(emailKey, { type: "json" });
-    
+    // For MVP: Store in environment or log
+    // In production: Use a real database
     const now = new Date().toISOString();
     
-    if (existing) {
-      // Update existing user
-      const updated = {
-        ...existing,
-        name: name || existing.name,
-        location: location || existing.location,
-        updatedAt: now
-      };
-      await store.setJSON(emailKey, updated);
-      
-      return new Response(JSON.stringify({ 
-        success: true, 
-        returning: true,
-        user: { email: updated.email, name: updated.name, location: updated.location }
-      }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-    
-    // Create new user
     const user = {
       email: email.toLowerCase().trim(),
       name: name || null,
       location: location || null,
-      createdAt: now,
-      updatedAt: now,
-      records: []
+      createdAt: now
     };
     
-    await store.setJSON(emailKey, user);
+    // Log to Netlify function logs (viewable in dashboard)
+    console.log("NEW_SIGNUP:", JSON.stringify(user));
     
     return new Response(JSON.stringify({ 
       success: true, 
