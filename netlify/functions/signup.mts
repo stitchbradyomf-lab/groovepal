@@ -1,3 +1,5 @@
+import { getStore } from "@netlify/blobs";
+
 export default async function handler(req: Request) {
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
@@ -17,19 +19,50 @@ export default async function handler(req: Request) {
       });
     }
 
-    // For MVP: Store in environment or log
-    // In production: Use a real database
+    const normalizedEmail = email.toLowerCase().trim();
+    const emailKey = normalizedEmail.replace(/[^a-z0-9@._-]/g, '_');
     const now = new Date().toISOString();
     
+    const store = getStore("users");
+    
+    // Check if user exists
+    let existing = null;
+    try {
+      existing = await store.get(emailKey, { type: "json" });
+    } catch (e) {
+      // Not found, that's fine
+    }
+    
+    if (existing) {
+      // Update existing user
+      const updated = {
+        ...existing,
+        name: name || existing.name,
+        location: location || existing.location,
+        updatedAt: now
+      };
+      await store.setJSON(emailKey, updated);
+      
+      return new Response(JSON.stringify({ 
+        success: true, 
+        returning: true,
+        user: { email: updated.email, name: updated.name, location: updated.location }
+      }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    
+    // Create new user
     const user = {
-      email: email.toLowerCase().trim(),
+      email: normalizedEmail,
       name: name || null,
       location: location || null,
-      createdAt: now
+      createdAt: now,
+      updatedAt: now
     };
     
-    // Log to Netlify function logs (viewable in dashboard)
-    console.log("NEW_SIGNUP:", JSON.stringify(user));
+    await store.setJSON(emailKey, user);
     
     return new Response(JSON.stringify({ 
       success: true, 
@@ -42,13 +75,9 @@ export default async function handler(req: Request) {
 
   } catch (error) {
     console.error("Signup error:", error);
-    return new Response(JSON.stringify({ error: "Server error" }), {
+    return new Response(JSON.stringify({ error: "Server error", details: String(error) }), {
       status: 500,
       headers: { "Content-Type": "application/json" }
     });
   }
 }
-
-export const config = {
-  path: "/.netlify/functions/signup"
-};
