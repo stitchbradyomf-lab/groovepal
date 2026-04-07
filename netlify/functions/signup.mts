@@ -1,5 +1,56 @@
 import { getStore } from "@netlify/blobs";
 
+const POCKETBASE_URL = "http://192.241.180.69:8090";
+const POCKETBASE_COLLECTION = "groove_pal_waitlist";
+
+async function getPocketBaseToken(): Promise<string | null> {
+  try {
+    const resp = await fetch(`${POCKETBASE_URL}/api/collections/users/auth-with-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        identity: "groovepal-service@kaihamil.com",
+        password: "dRPSVxBLrJ6l9rl"
+      })
+    });
+    
+    if (!resp.ok) {
+      console.error("PocketBase auth failed:", await resp.text());
+      return null;
+    }
+    
+    const data = await resp.json();
+    return data.token;
+  } catch (error) {
+    console.error("PocketBase auth error:", error);
+    return null;
+  }
+}
+
+async function createWaitlistEntry(token: string, userData: any) {
+  try {
+    const resp = await fetch(`${POCKETBASE_URL}/api/collections/${POCKETBASE_COLLECTION}/records`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify(userData)
+    });
+    
+    if (!resp.ok) {
+      const error = await resp.text();
+      console.error("PocketBase create failed:", error);
+      throw new Error(`PocketBase error: ${error}`);
+    }
+    
+    return await resp.json();
+  } catch (error) {
+    console.error("Create entry error:", error);
+    throw error;
+  }
+}
+
 export default async function handler(req: Request) {
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
@@ -20,54 +71,70 @@ export default async function handler(req: Request) {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
-    const emailKey = normalizedEmail.replace(/[^a-z0-9@._-]/g, '_');
     const now = new Date().toISOString();
     
-    const store = getStore("users");
+    // Get PocketBase token
+    const pbToken = await getPocketBaseToken();
     
-    // Check if user exists
-    let existing = null;
-    try {
-      existing = await store.get(emailKey, { type: "json" });
-    } catch (e) {
-      // Not found, that's fine
-    }
-    
-    if (existing) {
-      // Update existing user
-      const updated = {
-        ...existing,
-        name: name || existing.name,
-        location: location || existing.location,
-        updatedAt: now
-      };
-      await store.setJSON(emailKey, updated);
-      
-      return new Response(JSON.stringify({ 
-        success: true, 
-        returning: true,
-        user: { email: updated.email, name: updated.name, location: updated.location }
-      }), {
-        status: 200,
+    if (!pbToken) {
+      return new Response(JSON.stringify({ error: "Service authentication failed" }), {
+        status: 500,
         headers: { "Content-Type": "application/json" }
       });
     }
     
-    // Create new user
-    const user = {
+    // Parse location into city/state if possible
+    let city = null;
+    let state = null;
+    if (location) {
+      const parts = location.split(",").map((p: string) => p.trim());
+      if (parts.length >= 2) {
+        city = parts[0];
+        state = parts[1];
+      } else {
+        city = location;
+      }
+    }
+    
+    // Create entry in PocketBase
+    const waitlistData = {
+      email: normalizedEmail,
+      first_name: name || null,
+      city: city,
+      state: state,
+      source: "website",
+      referrer: null,
+      converted: false,
+      signed_up_at: now,
+      notes: `Migrated from Netlify Blobs on ${now}`
+    };
+    
+    const pbRecord = await createWaitlistEntry(pbToken, waitlistData);
+    
+    // Also maintain legacy Netlify Blobs storage (dual-write during migration)
+    const store = getStore("users");
+    const emailKey = normalizedEmail.replace(/[^a-z0-9@._-]/g, '_');
+    
+    const legacyUser = {
       email: normalizedEmail,
       name: name || null,
       location: location || null,
+      pocketbase_id: pbRecord.id,
       createdAt: now,
       updatedAt: now
     };
     
-    await store.setJSON(emailKey, user);
+    await store.setJSON(emailKey, legacyUser);
     
     return new Response(JSON.stringify({ 
       success: true, 
-      returning: false,
-      user: { email: user.email, name: user.name, location: user.location }
+      message: "Added to waitlist",
+      user: { 
+        email: normalizedEmail, 
+        name: name || null, 
+        location: location || null,
+        pocketbase_id: pbRecord.id
+      }
     }), {
       status: 200,
       headers: { "Content-Type": "application/json" }
