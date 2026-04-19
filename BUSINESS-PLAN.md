@@ -1,4 +1,4 @@
-# Groove Pal
+# Groove Pal — Business Plan (Revised April 2026)
 
 **A pal to whom you send your groove.**
 
@@ -6,7 +6,7 @@
 
 ## The Concept
 
-Groove Pal is a vinyl sharing network built on trust, patience, and presence. You receive a record from a pal. You listen — really listen. You attach your sticker. You send it to someone new. The record travels. The connection grows.
+Groove Pal is a vinyl sharing network built on trust, patience, and presence. You receive a record from a pal. You listen — really listen. You check in by scanning the QR code. You attach your sticker. You send it to someone new. When they scan and register, you become an Active Pal — eligible to receive records from the network.
 
 No algorithms. No feeds. Just music, mail, and meaning.
 
@@ -14,14 +14,45 @@ No algorithms. No feeds. Just music, mail, and meaning.
 
 ## How It Works
 
-### The Journey of a Record
+### The Active Pal System
 
-1. **You receive a vinyl** from a Groove Pal (or buy one to start)
-2. **You listen** — sit with someone, put on the record, be present
-3. **You attach your sticker** — your QR code joins the record's story
-4. **You send it forward** — mail it to a friend, family member, or stranger
-5. **They scan and register** — now they're a Groove Pal too
-6. **The cycle continues** — the record collects stickers, stories, miles
+**The key insight:** To receive records from the network, you must demonstrate that you send records forward.
+
+**The flow:**
+1. **Join** — Pay $45 (Standard, 2 vinyls) or $35 (Solo, 1 vinyl)
+2. **Receive** — Welcome package arrives: vinyl, QR stickers, branded sleeve
+3. **Check in** — Scan the QR on your record to activate your Pal account
+4. **Listen & attach** — Enjoy the music, add your sticker to the sleeve
+5. **Send forward** — Mail to someone new using integrated shipping
+6. **Recipient scans** — They check in, you become an Active Pal
+7. **Receive from network** — Now eligible for records from other Active Pals
+
+**Why this works:**
+- Ensures records travel (don't just accumulate)
+- Rewards participation, not just payment
+- Creates natural scarcity (only Active Pals receive)
+- Builds trust through demonstrated action
+
+### The Two-Tier Entry
+
+**Standard Entry — $45:**
+- 2 vinyl records (one for you, one for a Pal you identify)
+- QR sticker sheet
+- Branded outer sleeve
+- Platform access
+- Shipping included
+
+**Why 2 vinyls?** You're not just joining — you're bringing someone with you. This promotes generosity and accelerates network effects from day one.
+
+**Solo Entry — $35:**
+- 1 vinyl record
+- QR sticker sheet
+- Branded outer sleeve
+- Platform access
+
+**Path to Active:** Ship your record, recipient checks in, you join Active Pal list.
+
+**Why Solo?** Lower barrier to entry, higher margin. We encourage Standard because it grows the network, but Solo captures those who need a lower entry point.
 
 ### The Sticker System
 
@@ -35,7 +66,16 @@ Each Groove Pal receives a sheet of personal QR code stickers when they join.
 **On the record sleeve:**
 - Stickers accumulate like stamps in a passport
 - Each scan reveals: who sent it, when, and their note about the music
-- The record tells its own story through the people it's visited
+- The record tells its own story through the people who've visited
+
+### The Honor System
+
+> "This is a network of Groove Pals — not banking regulators."
+
+- No enforcement. No penalties. No surveillance beyond what people share.
+- If a record stops traveling, that's okay — it found a home.
+- If someone doesn't send it forward, the network absorbs it gracefully.
+- Trust is the feature, not a bug.
 
 ---
 
@@ -44,84 +84,103 @@ Each Groove Pal receives a sheet of personal QR code stickers when they join.
 ### Core Features
 
 **For New Members:**
-- Scan QR code on a sticker → lands on registration page
-- Pay $35 to join → receive your own sticker sheet + welcome record
+- Scan QR code on record → lands on check-in page
 - Create profile: name, location (city only), music taste
+- Choose entry tier: Standard ($45) or Solo ($35)
+- Payment via Stripe (Apple Pay, Google Pay, cards)
 
 **For Active Pals:**
-- **My Records** — vinyl I've sent, where they've traveled
+- **My Records** — vinyl I've sent, where they've traveled, who's checked in
 - **Received** — records that came to me, their journey so far
+- **Check In** — scan QR on arrival to register receipt
+- **Send Forward** — generate shipping label, log shipment
+- **Active Pal Status** — track eligibility to receive network records
 - **Say Thanks** — send a note to the pal who sent you a record
-- **The Groove** — discuss lyrics, memories, what the music means to you
-- **Send Forward** — log when you mail a record to someone new
 
 **Record Tracking:**
-- Each record has a unique ID (first sticker applied)
-- Map view: see where the record has traveled
+- Each record has a unique ID (embedded in QR)
 - Timeline: who held it, how long, where it went next
+- Map view: see where the record has traveled
 - Notes: what people said about the music
 
-### The Honor System
+### Shipping Integration
 
-> "This is a network of Groove Pals — not banking regulators."
+**The Flow:**
+1. Pal clicks "Send Forward"
+2. Pays for shipping via integrated checkout
+3. Generates pre-paid USPS Media Mail label with QR tracking
+4. Prints and attaches to package
+5. Drops off at USPS or schedules pickup
+6. Recipient scans QR on arrival → checks in → sender becomes Active Pal
 
-- No enforcement. No penalties. No tracking beyond what people share.
-- If a record stops traveling, that's okay. It found a home.
-- If someone doesn't send it forward, the network absorbs it gracefully.
-- Trust is the feature, not a bug.
+**Why integrate shipping?**
+- Removes friction (no need to go to post office, weigh, etc.)
+- Ensures tracking (we know when records arrive)
+- Confirms Active Pal status (scan = proof of shipment)
+- Revenue stream (small markup on shipping)
 
 ---
 
 ## Economics
 
-### The $35 Join Fee
+### Unit Economics
 
-**What you get:**
-- 1 welcome vinyl (curated by Groove Pal)
-- 10 personal QR stickers
-- Access to the platform
-- Ability to track records you send
-
-**Where the $35 goes:**
+**Standard Tier ($45):**
 | Item | Cost |
 |------|------|
-| Vinyl (wholesale) | $12-15 |
-| Sticker sheet (custom QR) | $3-4 |
-| Mailer + shipping to you | $6-8 |
-| Platform/overhead | $5-7 |
-| **Margin** | **$3-5** |
+| Vinyl (2 records, deal-sourced) | $16-24 |
+| QR sticker sheet | $3-4 |
+| Branded outer sleeve | $1-2 |
+| Mailer + packing | $2-3 |
+| Shipping to new Pal | $4-5 |
+| Payment processing | $1.50 |
+| Platform/overhead | $3-4 |
+| **Total Cost** | **$30.50-43.50** |
+| **Margin** | **$1.50-14.50** |
+| **Margin %** | **3-32%** |
 
-### The Reward Loop
+**Target margin: 20-40%** — achievable with optimized sourcing ($8-10/record, efficient fulfillment).
 
-**Problem:** How do you reward sharing without creating extraction?
+**Solo Tier ($35):**
+| Item | Cost |
+|------|------|
+| Vinyl (1 record) | $8-12 |
+| QR sticker sheet | $3-4 |
+| Branded outer sleeve | $1-2 |
+| Mailer + packing | $2-3 |
+| Shipping | $4-5 |
+| Payment processing | $1.35 |
+| Platform/overhead | $3-4 |
+| **Total Cost** | **$22.35-31.35** |
+| **Margin** | **$3.65-12.65** |
+| **Margin %** | **10-36%** |
 
-**Solution:** The Groove Loop
-
-1. **You join** ($35) → receive welcome record + stickers
-2. **You send a record** → log it on the platform
-3. **That record travels** → each new registration from your sticker earns you a "groove credit"
-4. **3 groove credits** → we send you a new record (free)
-5. **You send that one too** → the loop continues
-
-**The math:**
-- Each new member pays $35
-- ~$15 goes to vinyl + stickers + shipping
-- ~$5 goes to reward records for active sharers
-- ~$10 goes to platform + margin
-- Network grows exponentially while rewarding the sharers
-
-**Key insight:** The people who share the most get free records. The people who hoard pay once and stop. The system naturally selects for generosity.
+**Blended margin (70% Standard / 30% Solo):** ~20-33%
 
 ### Scaling Economics
 
-| Members | Revenue | Vinyl Costs | Reward Records | Net |
-|---------|---------|-------------|----------------|-----|
-| 100 | $3,500 | $1,500 | $300 | $1,700 |
-| 1,000 | $35,000 | $15,000 | $3,000 | $17,000 |
-| 10,000 | $350,000 | $150,000 | $30,000 | $170,000 |
-| 100,000 | $3.5M | $1.5M | $300K | $1.7M |
+| Active Pals | Annual Revenue | Annual Costs | Net | Margin |
+|-------------|----------------|--------------|-----|--------|
+| 100 | $4,200 | $2,750 | $1,450 | 35% |
+| 500 | $21,000 | $11,700 | $9,300 | 44% |
+| 1,000 | $42,000 | $21,500 | $20,500 | 49% |
+| 5,000 | $210,000 | $94,000 | $116,000 | 55% |
 
-**At scale:** ~48% margin after fulfillment and rewards.
+*Assumes 70/30 Standard/Solo split, optimized costs at scale*
+
+### Cash Flow
+
+**Favorable dynamics:**
+- Cash in: Immediate at signup
+- Cash out: Within 1-2 weeks (fulfillment)
+- No subscriptions: No monthly churn
+- Active Pal liability: Builds slowly, predictably
+
+**Working capital needs:**
+- Founding (10 pals): ~$400
+- Early (100 pals): ~$2,500
+- Growth (500 pals): ~$10,000
+- Scale (1,000+ pals): ~$20,000+
 
 ---
 
@@ -129,38 +188,89 @@ Each Groove Pal receives a sheet of personal QR code stickers when they join.
 
 ### Phase 1: The Founding Circle (Month 1)
 
-**Kyle sends 10 records to friends:**
+**Kyle sends 10 Standard packages:**
 - Hand-picked vinyl, meaningful to him
 - Personal note explaining Groove Pal
-- 5 stickers included (1 for them, 4 to share)
-- Ask them to listen, attach sticker, send forward
+- Ask recipients to identify their Pal (the second vinyl)
+- Request they listen, check in, attach sticker, send forward
 
-**Goal:** 10 → 40 people in first month (each person sends to 3-4 others)
+**Goal:** 10 Standard entries → 20 people in network (each brings a Pal)
+
+**Target:** 5-10 of those 20 become Active Pals (ship and get scanned)
 
 ### Phase 2: Friends of Friends (Months 2-3)
 
-- Platform goes live (basic tracking + registration)
+- Platform goes live (check-in, shipping integration)
 - Founding circle members invite their people
-- First "groove credits" earned and redeemed
-- 40 → 200 members
+- First wave of Solo entries ($35 tier)
+- First Active Pals receive records from network
 
-**Milestone:** First record with 5+ stickers completes a journey
+**Target:** 20 → 100 Active Pals
 
 ### Phase 3: Public Launch (Month 4+)
 
-- Open registration (anyone can join for $35)
+- Open registration (anyone can join)
 - Content: stories of records that traveled far
 - Press: "The anti-social network" angle
-- Partnerships: indie record stores, vinyl subscription boxes
+- Partnerships: indie record stores, vinyl communities
 
-**Goal:** 1,000 members by month 6
+**Target:** 1,000 Active Pals by month 12
 
-### Phase 4: Scale (Year 1+)
+### Phase 4: Scale (Year 2+)
 
 - Ambassador program (prolific sharers get perks)
 - Limited edition Groove Pal pressings
 - Annual "Groove Pal Day" — everyone sends a record
 - Corporate/team packages (team building through vinyl)
+
+---
+
+## Operations
+
+### Vinyl Sourcing
+
+**Strategy:** Deal hunting, not wholesale
+
+**Sources:**
+- Discogs (bulk purchases, watch for deals)
+- Local record shops (relationships, volume discounts)
+- Estate sales (collections at discount)
+- Direct from artists/labels (support indie)
+
+**Target cost:** $8-12 per record
+
+**Curation criteria:**
+- Worth sharing (not junk)
+- Mix of genres, decades, accessibility
+- Some known, some discoveries
+- Condition: VG+ minimum
+
+### Fulfillment
+
+**Process:**
+1. Source vinyl (batch of 25-50)
+2. Inspect and clean
+3. Insert in branded outer sleeve
+4. Add QR sticker sheet
+5. Pack in rigid mailer
+6. Ship to new Pal
+
+**Time:** 2-3 days from order to shipment
+
+**Space:** Can start from home, scale to small warehouse
+
+### Shipping Integration
+
+**Technology:**
+- USPS API for Media Mail rates
+- Label generation with QR code
+- Tracking webhook updates
+- Scan-to-check-in flow
+
+**Partners:**
+- Pirate Ship (discounted USPS rates)
+- Shippo (multi-carrier)
+- Or direct USPS integration
 
 ---
 
@@ -172,45 +282,54 @@ Each Groove Pal receives a sheet of personal QR code stickers when they join.
 - 10 personal QR stickers
 - Your unique code + Groove Pal branding
 - Designed to fit on record sleeves
+- Mailed to you (yes, physical mail!)
+
+**Branded Outer Sleeve**
+- Simple cardboard protector
+- Groove Pal branding
+- Space for stickers
+- Included with welcome vinyl
 
 **The Groove Pal Mailer**
 - Branded record mailer
 - "Handle with care — music inside" messaging
 - Space for handwritten note
 
-### Future Merchandise
+### Future Merchandise (Low Priority)
 
-- **Groove Pal tote** — for carrying records to friends
+- **Groove Pal tote** — for carrying records
 - **Listening journal** — notes on records received
-- **Turntable mat** — Groove Pal branded
 - **Enamel pin** — "I'm a Groove Pal"
-- **Limited pressings** — Groove Pal exclusive vinyl compilations
+- **Limited pressings** — exclusive compilations
 
 ---
 
-## Platform Tech (Simple)
+## Platform Tech
 
 ### MVP Features
 
-- **Registration** via QR scan
-- **Payment** ($35 Stripe checkout)
+- **Check-in** via QR scan
+- **Payment** ($35/$45 Stripe checkout)
 - **Profile** (name, city, music taste)
-- **Record logging** (I sent / I received)
+- **Record logging** (I sent / I received / I checked in)
 - **Sticker tracking** (which records have my sticker)
-- **Thank you notes** (async messages between pals)
+- **Shipping integration** (generate labels, pay, track)
+- **Active Pal status** (eligible to receive or not)
 
 ### Future Features
 
 - **Record map** (visualize a record's journey)
-- **Groove credits** (automated reward tracking)
 - **Discussion threads** (per record or per album)
-- **Listening parties** (virtual, async — "this week we're all listening to...")
+- **Listening parties** (virtual, async)
+- **Add-ons** (extra stickers, premium vinyl)
 
 ### Tech Stack (Lean)
 
-- Static site + simple backend (Supabase or similar)
+- Static site (Netlify/Vercel)
+- Backend: Supabase or PocketBase
 - QR codes → unique URLs (groovepal.com/r/ABC123)
 - Stripe for payments
+- USPS/Pirate Ship for shipping
 - Basic admin dashboard
 
 **Build cost:** $2-5K to MVP
@@ -234,8 +353,9 @@ Each Groove Pal receives a sheet of personal QR code stickers when they join.
 
 - **Physical goods** = hard to copy digitally
 - **Trust network** = can't be bought, must be grown
+- **Active Pal system** = creates natural scarcity
 - **Emotional resonance** = not a commodity
-- **Founder story** = authentic origin (penpal → marriage → this)
+- **Founder story** = authentic origin
 
 ### The Exit Potential
 
@@ -245,7 +365,9 @@ Each Groove Pal receives a sheet of personal QR code stickers when they join.
 - Lifestyle brands (Sonos, Audio-Technica)
 - Media companies wanting community
 
-**Realistic range:** $10-20M at 50-100K active members
+**Realistic range:** $5-15M at 10-50K Active Pals
+
+**But exit isn't the goal.** The goal is building something meaningful and sustainable.
 
 ---
 
@@ -269,16 +391,19 @@ Groove Pal is the Self side of Kai Hamil. The valley where you find elevation. T
 
 ## Next Steps
 
-1. [ ] Register groovepal.com
-2. [ ] Design sticker (QR + branding)
-3. [ ] Pick 10 founding records
-4. [ ] Write personal notes for founding circle
-5. [ ] Build landing page (coming soon + email capture)
-6. [ ] Send first 10 records
-7. [ ] Build MVP platform
-8. [ ] Launch publicly
+1. [ ] Finalize platform MVP scope
+2. [ ] Source first 25 records (deal hunting)
+3. [ ] Design QR sticker sheet
+4. [ ] Design branded outer sleeve
+5. [ ] Build check-in and payment flow
+6. [ ] Integrate shipping label generation
+7. [ ] Send first 10 Standard packages (founding circle)
+8. [ ] Document stories for content
+9. [ ] Iterate based on founding circle feedback
+10. [ ] Public launch
 
 ---
 
 *Created: March 18, 2026*
+*Revised: April 18, 2026*
 *By: Kyle Joseph Brady / Kai Hamil*

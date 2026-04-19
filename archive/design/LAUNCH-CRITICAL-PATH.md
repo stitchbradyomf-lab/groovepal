@@ -105,13 +105,13 @@
 **For initial batch:** You're giving these away to seed the network — no payment needed yet.
 
 **For new members joining later:**
-- [ ] Stripe checkout for $35
+- [ ] Stripe checkout for $45
 - [ ] Creates member account
 - [ ] Gets assigned a welcome record
 
 **MVP:** Can skip for launch batch if recipients are friends/family
 
-**Blocker cleared when:** You have a way to collect $35 (even if just Stripe link)
+**Blocker cleared when:** You have a way to collect $45 (even if just Stripe link)
 
 ---
 
@@ -162,7 +162,7 @@ groovepal.com/
 ├── r/GP-XXXX/log       ← Log your listen (NEED)
 ├── r/GP-XXXX/send      ← Send forward (NEED)
 ├── admin/register      ← Add new albums (NEED)
-└── join                ← $35 signup (LATER)
+└── join                ← $45 signup (LATER)
 ```
 
 **Data storage:** Netlify Blobs (one blob per record ID)
